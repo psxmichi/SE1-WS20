@@ -14,7 +14,6 @@ class Client {
 		// aufgerufen werden.
 		// Strenge Implementierung gegen das Interface Translator gewuenscht!
 
-		// ist zwar falsch aber egal
 		GermanTranslator translator = Factory.createGermanTranslator(); // new GermanTranslator();
 		String result = translator.translateNumber(1);
 
