@@ -3,7 +3,9 @@ package org.hbrs.se.ws20.uebung1.view;
 import org.hbrs.se.ws20.uebung1.control.GermanTranslator;
 import org.hbrs.se.ws20.uebung1.control.Translator;
 import org.hbrs.se.ws20.uebung1.control.factory.Factory;
-
+/**
+ * @author mlehma2s
+ */
 class Client {
 
 	/*
