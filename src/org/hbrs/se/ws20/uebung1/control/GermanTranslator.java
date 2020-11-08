@@ -6,23 +6,21 @@ package org.hbrs.se.ws20.uebung1.control;
 public class GermanTranslator implements Translator {
 
 	public String date = "Okt/2020"; // Default-Wert
+	private String[] num = {"eins", "zwei", "drei", "vier","fünf", "sechs", "sieben", "acht", "neun", "zehn"};
 
 	/**
 	 * Methode zur Übersetzung einer Zahl in eine String-Repraesentation
 	 */
 	public String translateNumber( int number ) { 
 		// [ihr Source Code aus Übung 1-2]
-		return (number == 1 ? "eins":
-				number == 2 ? "zwei":
-				number == 3 ? "drei":
-				number == 4 ? "vier":
-				number == 5 ? "fünf":
-				number == 6 ? "sechs":
-				number == 7 ? "sieben":
-				number == 8 ? "acht":
-				number == 9 ? "neun":
-				number == 10 ? "zehn":
-				"Übersetzung der Zahl " + number + " nicht möglich (" +  Translator.version + ")");
+		String erg = "";
+	try {
+		erg = num[number - 1];
+	}
+	catch(ArrayIndexOutOfBoundsException ex) {
+		erg = "Übersetzung der Zahl " + number + " nicht möglich (" +  Translator.version + ")";
+		}
+	return erg;
 	}
 		
 	/**
