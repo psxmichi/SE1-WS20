@@ -6,7 +6,9 @@ import org.hbrs.se.ws20.uebung1.control.factory.Factory;
 /**
  * @author mlehma2s
  */
-class Client {
+public class Client {
+
+	private Translator translator;
 
 	/*
 	 * Methode zur Ausgabe einer Zahl auf der Console
@@ -18,12 +20,14 @@ class Client {
 		// Strenge Implementierung gegen das Interface Translator gewuenscht!
 
 		Translator translator = Factory.createGermanTranslator(); // new GermanTranslator();
-		String result = translator.translateNumber(1);
-
-		System.out.println("Das Ergebnis der Berechnung: " +
-				"[das Ergebnis an dieser Stelle]" + result );
+		String result = translator.translateNumber(aNumber);
+		System.out.println("Das Ergebnis der Berechnung: " + result );
 
 		//translator = Factory.createEnglishTranslator()
+	}
+
+	public void setTranslator(Translator translator) {
+		this.translator = translator;
 	}
 }
 
