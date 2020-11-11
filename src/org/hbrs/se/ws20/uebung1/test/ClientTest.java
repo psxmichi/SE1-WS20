@@ -1,3 +1,4 @@
+package org.hbrs.se.ws20.uebung1.test;
 
 import org.hbrs.se.ws20.uebung1.control.GermanTranslator;
 import org.hbrs.se.ws20.uebung1.control.*;
@@ -11,6 +12,7 @@ public class ClientTest {
     private Translator translator;
     private Client client;
 
+        //Design Pattern Dependency Injection
     public ClientTest() {
 
         translator = new GermanTranslator();
