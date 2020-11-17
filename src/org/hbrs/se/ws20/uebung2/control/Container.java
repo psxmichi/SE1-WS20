@@ -1,6 +1,9 @@
 package org.hbrs.se.ws20.uebung2.control;
 
+import org.hbrs.se.ws20.uebung2.test.MemberGenau;
+
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class Container {
@@ -31,5 +34,13 @@ public class Container {
     }
     }
 
+    // Funktionale Anforderung 3
+    public void dump() {
+        Iterator<Member> i = liste.iterator();
+            while(i.hasNext()) {
+                Member m = i.next();
+                System.out.println("Member (id=" + m.getID() + ")");
+            }
+    }
 
 }

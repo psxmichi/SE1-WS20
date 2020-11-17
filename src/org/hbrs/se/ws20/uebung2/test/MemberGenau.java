@@ -17,4 +17,9 @@ public class MemberGenau implements Member {
     public void setID(Integer id) {
         this.id = id;
     }
+
+    @Override
+    public String toString() {
+        return "Member (id=" + id + ")";
+    }
 }
