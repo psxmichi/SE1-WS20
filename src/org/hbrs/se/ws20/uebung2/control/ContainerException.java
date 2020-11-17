@@ -1,5 +1,9 @@
 package org.hbrs.se.ws20.uebung2.control;
 
+/**
+ * @author mlehma2s
+ */
+
 public class ContainerException extends Throwable {
     private Integer id;
 
