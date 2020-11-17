@@ -42,5 +42,9 @@ public class Container {
                 System.out.println("Member (id=" + m.getID() + ")");
             }
     }
+    //Funktionale Anforderung 4
+    public int size(){
+        return liste.size();
+    }
 
 }
