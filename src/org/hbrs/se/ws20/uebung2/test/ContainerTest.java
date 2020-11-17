@@ -1,4 +1,4 @@
-package org.hbrs.se.ws20.uebung2.control;
+package org.hbrs.se.ws20.uebung2.test;
 
 /**
  * @author mlehma2s

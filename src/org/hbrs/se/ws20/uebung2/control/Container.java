@@ -1,5 +1,4 @@
 package org.hbrs.se.ws20.uebung2.control;
-import org.hbrs.se.ws20.uebung2.test.MemberGenau;
 /**
  * @author mlehma2s
  */
