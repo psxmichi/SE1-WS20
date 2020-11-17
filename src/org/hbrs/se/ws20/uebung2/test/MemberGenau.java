@@ -1,6 +1,6 @@
-package org.hbrs.se.ws20.uebung2;
+package org.hbrs.se.ws20.uebung2.test;
 
-import org.hbrs.se.ws20.uebung2.Member;
+import org.hbrs.se.ws20.uebung2.control.Member;
 
 public class MemberGenau implements Member {
     private Integer id = null;
@@ -14,7 +14,7 @@ public class MemberGenau implements Member {
         return this.id;
     }
 
-    public Integer setID(Integer id) {
+    public void setID(Integer id) {
         this.id = id;
     }
 }

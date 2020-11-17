@@ -1,4 +1,4 @@
-package org.hbrs.se.ws20.uebung2;
+package org.hbrs.se.ws20.uebung2.control;
 
 public class ContainerException extends Throwable {
     private Integer id;
