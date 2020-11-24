@@ -3,12 +3,10 @@ package org.hbrs.se.ws20.uebung2.control;
  * @author mlehma2s
  */
 
-import org.hbrs.se.ws20.uebung2.control.Member;
-
 public class MemberGenau implements Member {
     private Integer id = null;
 
-    public MemberGenau(){
+    public MemberGenau(int i){
         this.id = id;
     }
 

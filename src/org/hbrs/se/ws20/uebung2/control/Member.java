@@ -1,6 +1,6 @@
 package org.hbrs.se.ws20.uebung2.control;
 
-public interface Member {
+public interface Member extends org.hbrs.se.ws20.solutions.uebung2.Member {
 
     // ID ist über einen Konstruktor einer abgeleiteten Klasse
     // explizit außerhalb der Container-Klasse zu belegen
