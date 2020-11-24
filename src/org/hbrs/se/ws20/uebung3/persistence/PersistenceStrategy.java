@@ -1,5 +1,7 @@
 package org.hbrs.se.ws20.uebung3.persistence;
 
+import org.hbrs.se.ws20.uebung3.persistence.PersistenceException;
+
 import java.util.List;
 
 /**

@@ -1,7 +1,8 @@
 package org.hbrs.se.ws20.uebung3.persistence;
 
-import java.io.FileInputStream;
-import java.io.ObjectInputStream;
+import org.hbrs.se.ws20.uebung3.persistence.PersistenceException;
+import org.hbrs.se.ws20.uebung3.persistence.PersistenceStrategy;
+
 import java.util.List;
 
 public class PersistenceStrategyStream<Member> implements PersistenceStrategy<Member> {

@@ -1,5 +1,8 @@
 package org.hbrs.se.ws20.uebung3.persistence;
 
+import org.hbrs.se.ws20.uebung3.persistence.PersistenceException;
+import org.hbrs.se.ws20.uebung3.persistence.PersistenceStrategy;
+
 import java.util.List;
 
 public class PersistenceStrategyMongoDB<Member> implements PersistenceStrategy<Member> {
