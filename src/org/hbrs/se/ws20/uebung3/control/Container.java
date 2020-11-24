@@ -21,6 +21,15 @@ public class Container {
 	private Container(){
 	}
 
+	private static Container instanz = null;
+
+    //Singleton Pattern
+	public static Container getInstance() {
+	    if(instanz == null) {
+	        instanz = new Container();
+        }
+	    return instanz;
+    }
 	/*
 	 * Interne ArrayList zur Abspeicherung der Objekte
 	 * Alternative: HashMap oder Set. HashMap hat vor allem Probleme
