@@ -1,6 +1,7 @@
 package org.hbrs.se.ws20.uebung3.control;
 
 import org.hbrs.se.ws20.uebung3.persistence.PersistenceException;
+import org.hbrs.se.ws20.uebung3.persistence.PersistenceStrategyStream;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -39,11 +40,11 @@ public class Container {
 
 	// CR2
 	public void store() throws PersistenceException {
-
+		PersistenceStrategyStream.save();
 	}
 
 	public void load() throws PersistenceException {
-
+		PersistenceStrategyStream.load(liste);
 	}
 
 	/*
