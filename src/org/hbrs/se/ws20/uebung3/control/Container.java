@@ -22,8 +22,12 @@ public class Container {
 
 	private static Container instanz = null;
 
-    //Singleton Pattern
-	public static Container getInstance() {
+    //Singleton Pattern Anwendungsfall: Datenverwaltung
+	// Vorteil: Erzeugung des Objekts bei Bedarf
+	// Nachteil:Probleme bei parallelen Zugriff von Client-Objekten
+	// Multi-Threading -> Lösung ist nicht thread-safe
+	// Eine Thread Safe Lösung: synchronized. Kann immer nur von einem Client benutzt werden
+	public static synchronized Container getInstance() {
 	    if(instanz == null) {
 	        instanz = new Container();
         }

@@ -24,7 +24,7 @@ public class MemberView {
         Member r5 = new MemberKonkret(934);
 
         // Den Container anlegen
-        Container store = new Container();
+        //Container store = new Container();
     }
     /*
      * Methode zur Ausgabe aller IDs der Member-Objekte. Es werden verschiedene Varianten vorgestellt!

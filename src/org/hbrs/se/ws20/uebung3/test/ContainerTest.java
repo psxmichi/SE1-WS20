@@ -28,7 +28,11 @@ class ContainerTest {
         Member r5 = new MemberKonkret(934);
 
         // Den Container anlegen
-        Container store = new Container();
+        Container store = Container.getInstance();
+        Container store2 = Container.getInstance();
+
+        //Überprüfung auf Objekt-Identität (vs. assertEquals für Gleichheit)
+        assertSame(store, store2);
 
         // Testfall 1 - Check auf leeren Container
         assertEquals ( 0 , store.size() ,"Testfall 1 - Pruefung auf leeren Store"   );
