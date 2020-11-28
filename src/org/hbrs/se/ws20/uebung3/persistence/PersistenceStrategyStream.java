@@ -15,7 +15,7 @@ import static java.util.Collections.list;
  */
 
 public class PersistenceStrategyStream<Member, FileInputStream extends InputStream> implements PersistenceStrategy<Member> {
-    private Object Member;
+    private static Object Member;
 
     public static void save() {
         save();
@@ -69,7 +69,7 @@ public class PersistenceStrategyStream<Member, FileInputStream extends InputStre
      * Method for loading a list of Member-objects from a disk (HDD)
      * Some coding examples come for free :-)
      */
-    public static List<Member> load() throws PersistenceException, IOException {
+    public List<Member> load() throws PersistenceException, IOException {
         // Some Coding hints ;-)
         ObjectInputStream ois = null;
         FileInputStream fis = null;
