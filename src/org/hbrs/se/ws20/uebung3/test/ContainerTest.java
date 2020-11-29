@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * @mlehma2s
  */
 class ContainerTest {
-    private org.hbrs.se.ws20.solutions.uebung3.Container container;
+    private Container container;
 
     @BeforeEach
     void setUp() {
@@ -39,7 +39,7 @@ class ContainerTest {
     @Test
     void testMongoDBNotImplemented() {
         try {
-            container.setPersistenceStrategie( new PersistenceStrategyMongoDB<org.hbrs.se.ws20.solutions.uebung3.Member>() );
+            container.setPersistenceStrategie( new PersistenceStrategyMongoDB<Member>() );
             container.store();
         } catch (PersistenceException e) {
             System.out.println("Message: " + e.getMessage() );
