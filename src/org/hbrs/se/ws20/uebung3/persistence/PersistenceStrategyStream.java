@@ -16,6 +16,12 @@ import static java.util.Collections.list;
 
 public class PersistenceStrategyStream<Member, FileInputStream extends InputStream> implements PersistenceStrategy<Member> {
     private static Object Member;
+    // URL der Datei, in der die Objekte gespeichert werden
+    private String LOCATION = "objects.ser";
+    private ObjectOutputStream oos = null;
+    private FileOutputStream fos = null;
+    private java.io.FileInputStream fis = null;
+    private ObjectInputStream ois = null;
 
     public static void save() {
         save();
@@ -31,36 +37,62 @@ public class PersistenceStrategyStream<Member, FileInputStream extends InputStre
     //CR2
     @Override
     public void openConnection() throws PersistenceException, IOException {
-        FileInputStream fis = new FileInputStream(" a location to a file");
-        ObjectInputStream ois = new ObjectInputStream(fis);
+        try {
+            fos = new FileOutputStream( LOCATION );
+            // fis = new FileInputStream( LOCATION );
+        } catch (FileNotFoundException e) {
+            throw new PersistenceException(PersistenceException.ExceptionType.ConnectionNotAvailable
+                    , "Error in opening the connection, File could not be found");
+        }
+        try {
+            oos = new ObjectOutputStream( fos );
+            // ois = new ObjectInputStream(  fis  );
+        } catch (IOException e) {
+            throw new PersistenceException(PersistenceException.ExceptionType.ConnectionNotAvailable
+                    , "Error in opening the connection, problems with the stream");
+        }
     }
 
     @Override
     public void closeConnection() throws PersistenceException {
-    //Innerhalb der Methode closeConnection wäre dies in einem finally Block korrekt
-    fis.close();
-    ois.close();
+        try {
+            // Closing the outputstreams for storing
+            if (oos != null) oos.close();
+            if (fos != null) fos.close();
+
+            // Closing the inputstreams for loading
+            if (ois != null) ois.close();
+            if (fis != null) fis.close();
+        } catch( IOException e ) {
+            // Lazy solution: catching the exception of any closing activity ;-)
+            throw new PersistenceException(PersistenceException.ExceptionType.ConnectionNotAvailable
+                    , "error while closing connections");
+        }
     }
 
     @Override
     /**
      * Method for saving a list of Member-objects to a disk (HDD)
      */
-    public void save(List<Member> member) throws PersistenceException {
-        OutputStream fos = null;
+    public void save(List<Member> list) throws PersistenceException {
+        // ensure that the connection is open
+        this.closeConnection();
+        // Schreibe Objekte in den Stream
         try {
-            try {
-                fos = new FileOutputStream("Filename");
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
+            System.out.println(  list.size() + " User Stories wurden erfolgreich gespeichert!");
+            oos.writeObject( list );
+
+        }
+        catch (IOException e) {
+            // Koennte man ausgeben für interne Debugs: e.printStackTrace();
+            // Chain of Responsibility: Hochtragen der Exception in Richtung Ausgabe (UI)
+            // Uebergabe in ein lesbares Format fuer den Benutzer
+            e.printStackTrace();
+            throw new PersistenceException(PersistenceException.ExceptionType.LoadFailure
+                    , "Fehler beim Speichern der Datei!");
         }
         finally {
-            try {
-            fos.close();
-            } catch ( Exception e )
-            { e.printStackTrace();
-            }
+            this.closeConnection();
         }
     }
 
@@ -70,28 +102,36 @@ public class PersistenceStrategyStream<Member, FileInputStream extends InputStre
      * Some coding examples come for free :-)
      */
     public List<Member> load() throws PersistenceException, IOException {
-        // Some Coding hints ;-)
-        ObjectInputStream ois = null;
-        FileInputStream fis = null;
-        List<Member> newList =  null;
-        //
-        // Initiating the Stream (can also be moved to method openConnection()... ;-)
-        //fis = new FileInputStream( " a location to a file" );
-        //ois = new ObjectInputStream(fis);
+        // Load the objects from stream
+        List<Member> list = null;
 
-        // Reading and extracting the list (try .. catch ommitted here)
-        openConnection();
         try {
-            Object obj = ois.readObject();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
+            // Create Streams here instead using "this.openConnection();"
+            fis = new java.io.FileInputStream( LOCATION );
+            ois = new ObjectInputStream( fis );
 
-        if (Member instanceof List<?>) {
-            newList = (List) Member;
-            return newList;
+            // Auslesen der Liste
+            Object obj = ois.readObject();
+            if (obj instanceof List<?>) {
+                list = (List) obj;
+            }
+            System.out.println("LOG: Es wurden " + list.size() + " User Stories erfolgreich reingeladen!");
+            return list;
         }
-        // and finally close the streams (guess where this could be...?)
-        return null;
+        catch (IOException e) {
+            // Sup-Optimal, da Exeception in Form eines unlesbaren Stake-Traces ausgegeben wird
+            e.printStackTrace();
+            throw new PersistenceException(PersistenceException.ExceptionType.LoadFailure
+                    , "Fehler beim Laden der Datei!");
+        }
+        catch (ClassNotFoundException e) {
+            // Chain of Responsbility erfuellt, durch Throw der Exceotion kann UI
+            // benachrichtigt werden!
+            throw new PersistenceException(PersistenceException.ExceptionType.LoadFailure
+                    , "Fehler beim Laden der Datei! Class not found!");
+        }
+        finally {
+            this.closeConnection();
+        }
     }
 }

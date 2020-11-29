@@ -1,9 +1,12 @@
 package org.hbrs.se.ws20.uebung3.test;
 
-import org.hbrs.se.ws20.uebung3.control.Container;
-import org.hbrs.se.ws20.uebung3.control.ContainerException;
-import org.hbrs.se.ws20.uebung3.control.Member;
-import org.hbrs.se.ws20.uebung3.control.MemberKonkret;
+import org.hbrs.se.ws20.solutions.uebung3.Container;
+import org.hbrs.se.ws20.solutions.uebung3.ContainerException;
+import org.hbrs.se.ws20.solutions.uebung3.Member;
+import org.hbrs.se.ws20.solutions.uebung3.MemberKonkret;
+import org.hbrs.se.ws20.solutions.uebung3.persistence.PersistenceException;
+import org.hbrs.se.ws20.solutions.uebung3.persistence.PersistenceStrategyMongoDB;
+import org.hbrs.se.ws20.solutions.uebung3.persistence.PersistenceStrategyStream;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -13,78 +16,73 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * @mlehma2s
  */
 class ContainerTest {
+    private org.hbrs.se.ws20.solutions.uebung3.Container container;
 
     @BeforeEach
     void setUp() {
+        container = Container.getInstance();
     }
 
     @Test
-    void addMember() {
-        // Test-Objekte anlegen
-        Member r1 = new MemberKonkret(12);
-        Member r2 = new MemberKonkret(32);
-        Member r3 = new MemberKonkret(112);
-        Member r4 = new MemberKonkret(1211);
-        Member r5 = new MemberKonkret(934);
-
-        // Den Container anlegen
-        Container store = Container.getInstance();
-        Container store2 = Container.getInstance();
-
-        //Überprüfung auf Objekt-Identität (vs. assertEquals für Gleichheit)
-        assertSame(store, store2);
-
-        // Testfall 1 - Check auf leeren Container
-        assertEquals ( 0 , store.size() ,"Testfall 1 - Pruefung auf leeren Store"   );
-
+    void testNoStrategeySet() {
         try {
-            store.addMember( r1 );
-            store.addMember( r2 );
-            store.addMember( r3 );
-            store.addMember( r4 );
+            container.setPersistenceStrategie(null);
+            container.store();
 
-        } catch (ContainerException e) {
-            e.printStackTrace();
+        } catch (PersistenceException e) {
+            System.out.println("Message: " + e.getMessage() );
+            assertEquals( e.getMessage() , "Strategy not initialized" );
+            assertEquals(  e.getExceptionTypeType() , PersistenceException.ExceptionType.NoStrategyIsSet );
         }
-
-
-        // Testfall 2 - Pruefen, ob vier Objekte eingefuegt wurden
-        assertEquals ( 4 , store.size() ,"Testfall 2 - Prüfen, ob vier Objekte eingefuegt wurden"   );
-
-        try {
-            store.addMember(r5);
-        } catch (ContainerException e) {
-            e.printStackTrace();
-        }
-
-        // Testfall 3 - Pruefen, ob fuenftes Objekt eingefuegt wurde
-        assertEquals ( 5 , store.size() , "Testfall 3 - Prüfen, ob fuenftes Objekt eingefuegt wurde"   );
-
-        String result = store.deleteMember(12);
-        // System.out.println( result );
-
-        // Testfall 4 - Pruefen, ob Objekt geloescht wurde
-        assertEquals (  4 , store.size()  , "Testfall 4 - Prüfen, ob Objekt geloescht wurde" );
-
-        result = store.deleteMember(12222);
-        System.out.println( result );
-
-        // Testfall 5 - Pruefen, ob ein Objekt faelschlicherweise nicht geloescht wurde
-        assertEquals (  4 , store.size() , "Testfall 5 - Pruefen, ob ein Objekt faelschlicherweise nicht geloescht wurde"  );
-
-        try {
-            store.addMember( r2 );
-        } catch (ContainerException e) {
-
-            e.printStackTrace();
-
-        } finally {
-
-            // Testfall 6 - Pruefen, ob ein Objekt faelschlicherweise nicht doppelt eingefuegt wurde
-            assertEquals ( 4 , store.size() , "Testfall 6 - Pruefen, ob ein Objekt faelschlicherweise nicht doppelt eingefuegt wurde"  );
-        }
-
-        // Test der Dump-Funktion (ohne Kontrolle)
-        store.dump();
-
     }
+
+    @Test
+    void testMongoDBNotImplemented() {
+        try {
+            container.setPersistenceStrategie( new PersistenceStrategyMongoDB<org.hbrs.se.ws20.solutions.uebung3.Member>() );
+            container.store();
+        } catch (PersistenceException e) {
+            System.out.println("Message: " + e.getMessage() );
+            assertEquals( e.getMessage() , "Not implemented!" );
+            assertEquals(  e.getExceptionTypeType() , PersistenceException.ExceptionType.ImplementationNotAvailable );
+        }
+    }
+
+    @Test
+    void testWrongLocationOfFile() {
+        try {
+            PersistenceStrategyStream<org.hbrs.se.ws20.solutions.uebung3.Member> strat = new PersistenceStrategyStream<org.hbrs.se.ws20.solutions.uebung3.Member>();
+
+            // FileStreams do not like directories, so try this out ;-)
+            strat.setLOCATION("/Users/saschaalda/tmp");
+            container.setPersistenceStrategie( strat );
+            container.store();
+
+        } catch (PersistenceException e) {
+            System.out.println("Message: " + e.getMessage() );
+            assertEquals( e.getMessage() , "Error in opening the connection, File could not be found" );
+            assertEquals(  PersistenceException.ExceptionType.ConnectionNotAvailable  ,
+                    e.getExceptionTypeType() ) ;
+        }
+    }
+
+    @Test
+    void testStoreAndLoad() {
+        try {
+            container.setPersistenceStrategie( new PersistenceStrategyStream<Member>() );
+            container.addMember(new MemberKonkret(1));
+
+            assertEquals( 1 , container.size() );
+            container.store();
+
+            container.deleteMember(1);
+            assertEquals(0 , container.size() );
+
+            container.load();
+            assertEquals( 1 , container.size() );
+
+        } catch (PersistenceException | ContainerException e) {
+            System.out.println("Message: " + e.getMessage() );
+        }
+    }
+}
