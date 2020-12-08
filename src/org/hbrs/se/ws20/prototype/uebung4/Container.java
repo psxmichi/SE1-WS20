@@ -20,7 +20,7 @@ import java.util.Scanner;
 public class Container {
 	 
 	// Interne ArrayList zur Abspeicherung der Objekte
-	private List<UserStory> liste = null; 
+	private static List<UserStory> liste = null;
 	
 	// Statische Klassen-Variable, um die Referenz
 	// auf das einzige Container-Objekt abzuspeichern
@@ -221,7 +221,7 @@ public class Container {
 	 * @return
 	 */
 	public static List<UserStory> getCurrentList() {
-		return this.liste;
+		return liste;
 	}
 
 	/**
