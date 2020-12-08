@@ -28,7 +28,7 @@ public class Container {
 	private static Container instance = new Container();
 	
 	// URL der Datei, in der die Objekte gespeichert werden 
-	final static String LOCATION = "userstories1.ser";
+	public final static String LOCATION = "userstories1.ser";
 
 	/**
 	 * Liefert ein Singleton zurück. Diese Methode ist thread-safe (oder...?) --> RICHTIG
@@ -211,7 +211,7 @@ public class Container {
 	 * Ermittlung der Anzahl von internen UserStory-Objekten
 	 * @return
 	 */
-	public int size(){
+	public static int size(){
 		return liste.size();
 	}
 
@@ -220,7 +220,7 @@ public class Container {
 	 * Findet aktuell keine Anwendung bei Hr. P.
 	 * @return
 	 */
-	public List<UserStory> getCurrentList() {
+	public static List<UserStory> getCurrentList() {
 		return this.liste;
 	}
 
