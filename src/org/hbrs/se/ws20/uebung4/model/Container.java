@@ -2,6 +2,8 @@ package org.hbrs.se.ws20.uebung4.model;
 
 import org.hbrs.se.ws20.prototype.uebung4.ContainerException;
 import org.hbrs.se.ws20.prototype.uebung4.UserStory;
+import org.hbrs.se.ws20.uebung4.persistence.PersistenceException;
+import org.hbrs.se.ws20.uebung4.persistence.PersistenceStrategyStream;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -48,7 +50,13 @@ public class Container {
 	private Container(){
 		liste = new ArrayList<UserStory>();
 	}
+	public void store() throws PersistenceException {
+		PersistenceStrategyStream.save();
+	}
 
+	public void load() throws PersistenceException {
+		PersistenceStrategyStream.load(this.liste);
+	}
 	/**
 	 * Methode zum Hinzufügen einer Story unter Wahrung der Schlüsseleigenschaft
 	 * @param r

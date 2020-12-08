@@ -34,7 +34,7 @@ public class EingabeDialog {
 
             // 	Falls 'help' eingegeben wurde, werden alle Befehle ausgedruckt
             if ( strings[0].equals("help") ) {
-                System.out.println("Folgende Befehle stehen zur Verfuegung: help, dump....");
+                System.out.println("Folgende Befehle stehen zur Verfuegung: help, dump, enter, store, load, exit");
             }
             // Auswahl der bisher implementierten Befehle:
             if ( strings[0].equals("dump") ) {
@@ -43,11 +43,14 @@ public class EingabeDialog {
             // Auswahl der bisher implementierten Befehle:
             if ( strings[0].equals("enter") ) {
                 // Daten einlesen ...
-                // this.addUserStory( userStory ) um das Objekt in Liste einzufügen
+                //this.addUserStory( userStory ) um das Objekt in Liste einzufügen
             }
 
             if (  strings[0].equals("store")  ) {
                 this.store();
+            }
+            if ( strings[0].equals("load") ) {
+                Container.getInstance().load();
             }
         } // Ende der Schleife
     }

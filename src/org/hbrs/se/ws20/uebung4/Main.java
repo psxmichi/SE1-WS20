@@ -10,7 +10,7 @@ public class Main {
      * (hier koennen ggf. weitere Initialisierungsarbeiten gemacht werden spaeter)
      */
     public static void main (String[] args) throws Exception  {
-        Container con = Container.getInstance();
-        con.startEingabe();
+        EingabeDialog dia = new EingabeDialog();
+        dia.startEingabe();
     }
 }

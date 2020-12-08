@@ -1,6 +1,4 @@
-package org.hbrs.se.ws20.uebung4.model.persistence;
-
-import org.hbrs.se.ws20.uebung3.persistence.PersistenceException;
+package org.hbrs.se.ws20.uebung4.persistence;
 
 import java.io.IOException;
 import java.util.List;
@@ -14,8 +12,8 @@ import java.util.List;
  * @param <E>
  */
 public interface PersistenceStrategy<E> {
-    public void openConnection() throws PersistenceException, IOException;
-    public void closeConnection() throws PersistenceException;
+    public void openConnection() throws PersistenceException, IOException, org.hbrs.se.ws20.uebung4.persistence.PersistenceException;
+    public void closeConnection() throws PersistenceException, org.hbrs.se.ws20.uebung3.persistence.PersistenceException;
     public void save(List<E> member) throws PersistenceException;
     public List<E> load() throws PersistenceException, IOException;
 }
