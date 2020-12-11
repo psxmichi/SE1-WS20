@@ -1,6 +1,9 @@
 package org.hbrs.se.ws20.uebung4;
+/**
+ * @author mlehma2s
+ */
 
-import org.hbrs.se.ws20.uebung4.view.*;
+import org.hbrs.se.ws20.uebung4.persistence.*;
 import org.hbrs.se.ws20.uebung4.model.*;
 import org.hbrs.se.ws20.uebung4.control.*;
 
